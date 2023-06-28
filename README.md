@@ -31,6 +31,15 @@ reget github <owner>/<repo> -r/--release 1.10.3
 
 ```
 
+## Installation
+
+### Use MacOS / Homebrew
+
+```
+brew tap januznl/reget
+brew install reget
+```
+
 ## Use in Docker
 
 ```
@@ -43,3 +52,4 @@ COPY --from=januznl/reget:latest /reget /reget
 
 ## Todo
 * Add other SVN's than github
+
