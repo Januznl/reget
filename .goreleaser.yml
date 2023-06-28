@@ -1,0 +1,105 @@
+before:
+  hooks:
+    - go mod download
+    - go generate ./...
+builds:
+  - env:
+    - CGO_ENABLED=0
+    goos:
+      - linux
+    goarch:
+      - amd64
+      - arm
+      - arm64
+    goarm:
+      - 6
+      - 7
+    mod_timestamp: "{{ .CommitTimestamp }}"
+archives:
+  - name_template: '{{ .ProjectName }}_{{ .Os }}_{{ .Arch }}{{ if .Arm }}v{{ .Arm }}{{ end }}'
+    replacements:
+      darwin: Darwin
+      linux: Linux
+      windows: Windows
+      386: i386
+      amd64: x86_64
+    format_overrides:
+      - goos: windows
+        format: zip
+    files:
+      - README.md
+      - LICENSE
+checksum:
+  name_template: 'checksums.txt'
+snapshot:
+  name_template: "{{ .Tag }}-next"
+changelog:
+  sort: asc
+  filters:
+    exclude:
+      - '^docs:'
+      - '^test:'
+dockers:
+  - use: buildx
+    goos: linux
+    goarch: amd64
+    image_templates:
+      - "januznl/reget:{{ .Version }}-amd64"
+      - "januznl/reget:latest-amd64"
+    build_flag_templates:
+      - "--platform=linux/amd64"
+      - "--label=org.opencontainers.image.created={{.Date}}"
+      - "--label=org.opencontainers.image.title={{.ProjectName}}"
+      - "--label=org.opencontainers.image.revision={{.FullCommit}}"
+      - "--label=org.opencontainers.image.version={{.Version}}"
+  - use: buildx
+    goos: linux
+    goarch: arm64
+    image_templates:
+      - "januznl/reget:{{ .Version }}-arm64v8"
+      - "januznl/reget:latest-arm64v8"
+    build_flag_templates:
+      - "--platform=linux/arm64/v8"
+      - "--label=org.opencontainers.image.created={{.Date}}"
+      - "--label=org.opencontainers.image.title={{.ProjectName}}"
+      - "--label=org.opencontainers.image.revision={{.FullCommit}}"
+      - "--label=org.opencontainers.image.version={{.Version}}"
+  - use: buildx
+    goos: linux
+    goarch: arm
+    goarm: 6
+    image_templates:
+      - "januznl/reget:{{ .Version }}-armv6"
+      - "januznl/reget:latest-armv6"
+    build_flag_templates:
+      - "--platform=linux/arm/v6"
+      - "--label=org.opencontainers.image.created={{.Date}}"
+      - "--label=org.opencontainers.image.title={{.ProjectName}}"
+      - "--label=org.opencontainers.image.revision={{.FullCommit}}"
+      - "--label=org.opencontainers.image.version={{.Version}}"
+  - use: buildx
+    goos: linux
+    goarch: arm
+    goarm: 7
+    image_templates:
+      - "januznl/reget:{{ .Version }}-armv7"
+      - "januznl/reget:latest-armv7"
+    build_flag_templates:
+      - "--platform=linux/arm/v7"
+      - "--label=org.opencontainers.image.created={{.Date}}"
+      - "--label=org.opencontainers.image.title={{.ProjectName}}"
+      - "--label=org.opencontainers.image.revision={{.FullCommit}}"
+      - "--label=org.opencontainers.image.version={{.Version}}"
+docker_manifests:
+  - name_template: januznl/reget:{{ .Version }}
+    image_templates:
+      - januznl/reget:{{ .Version }}-amd64
+      - januznl/reget:{{ .Version }}-arm64v8
+      - januznl/reget:{{ .Version }}-armv6
+      - januznl/reget:{{ .Version }}-armv7
+  - name_template: januznl/reget:latest
+    image_templates:
+      - januznl/reget:latest-amd64
+      - januznl/reget:latest-arm64v8
+      - januznl/reget:latest-armv6
+      - januznl/reget:latest-armv7
