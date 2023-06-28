@@ -42,7 +42,7 @@ changelog:
 brews:
   - tap:
       owner: januznl
-      name: homebrew-reget
+      name: homebrew-januznl
     homepage:  https://github.com/januznl/reget
     description: Download a specific or latest release/tag from github based on the API
     license: "MIT"
