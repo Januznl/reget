@@ -36,7 +36,7 @@ reget github <owner>/<repo> -r/--release 1.10.3
 ### Use MacOS / Homebrew
 
 ```
-brew tap januznl/reget
+brew tap januznl/januznl
 brew install reget
 ```
 
