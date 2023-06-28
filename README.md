@@ -36,7 +36,7 @@ reget github <owner>/<repo> -r/--release 1.10.3
 ```
 FROM example
 ...
-COPY --from=reget:latest /reget /reget
+COPY --from=januznl/reget:latest /reget /reget
 ...
 
 ```

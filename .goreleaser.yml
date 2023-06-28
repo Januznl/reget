@@ -39,6 +39,17 @@ changelog:
     exclude:
       - '^docs:'
       - '^test:'
+brews:
+  - tap:
+      owner: januznl
+      name: homebrew-reget
+    homepage:  https://github.com/januznl/reget
+    description: Download a specific or latest release/tag from github based on the API
+    license: "MIT"
+    test: |
+      system "#{bin}/reget -v"
+    install: |-
+      bin.install "reget"
 dockers:
   - use: buildx
     goos: linux
