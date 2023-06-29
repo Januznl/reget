@@ -22,5 +22,6 @@ func init() {
 	// cobra.OnInitialize(initConfig)
 	rootCmd.CompletionOptions.DisableDefaultCmd = true
 	rootCmd.AddCommand(githubCmd)
+	rootCmd.AddCommand(peclCmd)
 	rootCmd.PersistentFlags().BoolVarP(&verbose, "verbose", "v", false, "verbose output")
 }

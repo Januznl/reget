@@ -6,6 +6,7 @@ import (
 	"fmt"
 	"io"
 	"net/http"
+	"reget/compare"
 	"strings"
 )
 
@@ -47,12 +48,12 @@ func GetRelease(url string, arch string, release string, pinnedRelease string) (
 		fmt.Println(apiRelease.Name)
 
 		if pinnedRelease != "" {
-			if compareReleases(pinnedRelease, apiRelease.Name) {
+			if compare.CompareReleases(pinnedRelease, apiRelease.Name) {
 				return findReleaseUrl(apiRelease.Assets, arch, apiRelease.TarBallUrl)
 			}
 		} else {
 			if release != "latest" {
-				if compareEqualReleases(release, apiRelease.Name) {
+				if compare.CompareEqualReleases(release, apiRelease.Name) {
 					return findReleaseUrl(apiRelease.Assets, arch, apiRelease.TarBallUrl)
 				}
 			} else {

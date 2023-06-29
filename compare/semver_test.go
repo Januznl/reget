@@ -1,4 +1,4 @@
-package github
+package compare
 
 import "testing"
 
@@ -54,7 +54,7 @@ func Test_compareEqualReleases(t *testing.T) {
 	}
 
 	for _, test := range compareEqualTests {
-		if output := compareEqualReleases(test.arg1, test.arg2); output != test.expected {
+		if output := CompareEqualReleases(test.arg1, test.arg2); output != test.expected {
 			t.Errorf("Output %t not equal to expected %t", output, test.expected)
 		}
 	}
@@ -71,7 +71,7 @@ func Test_compareReleases(t *testing.T) {
 	}
 
 	for _, test := range compareReleasesTests {
-		if output := compareReleases(test.arg1, test.arg2); output != test.expected {
+		if output := CompareReleases(test.arg1, test.arg2); output != test.expected {
 			t.Errorf("Output %t not equal to expected %t", output, test.expected)
 		}
 	}

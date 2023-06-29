@@ -1,4 +1,4 @@
-package github
+package compare
 
 import (
 	"fmt"
@@ -6,20 +6,7 @@ import (
 	"strings"
 )
 
-func compareEqualReleases(reqRelease string, foundRelease string) bool {
-	reqVersion := releaseToVersion(reqRelease)
-	foundVersion := releaseToVersion(foundRelease)
-	if reqVersion.Major == foundVersion.Major {
-		if reqVersion.Minor == foundVersion.Minor {
-			if reqVersion.Patch == foundVersion.Patch {
-				return true
-			}
-		}
-	}
-	return false
-}
-
-func compareReleases(reqRelease string, foundRelease string) bool {
+func CompareReleases(reqRelease string, foundRelease string) bool {
 	reqVersion := releaseToVersion(reqRelease)
 	foundVersion := releaseToVersion(foundRelease)
 
@@ -43,6 +30,19 @@ func compareReleases(reqRelease string, foundRelease string) bool {
 		}
 	}
 
+	return false
+}
+
+func CompareEqualReleases(reqRelease string, foundRelease string) bool {
+	reqVersion := releaseToVersion(reqRelease)
+	foundVersion := releaseToVersion(foundRelease)
+	if reqVersion.Major == foundVersion.Major {
+		if reqVersion.Minor == foundVersion.Minor {
+			if reqVersion.Patch == foundVersion.Patch {
+				return true
+			}
+		}
+	}
 	return false
 }
 
