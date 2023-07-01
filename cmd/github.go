@@ -26,12 +26,10 @@ var flagOutputFileName string
 func init() {
 	osArch := fmt.Sprintf("%s_%s", runtime.GOOS, runtime.GOARCH)
 	githubCmd.Flags().BoolVarP(&flagUseTags, "use-tag", "t", false, "use tags is no releases were made")
-
 	githubCmd.Flags().StringVarP(&flagArch, "architecture", "a", osArch, "arch for example 'darwin_x64'")
 	githubCmd.Flags().StringVarP(&flagRelease, "release", "r", "latest", "Release ex 1.2.1")
 	githubCmd.Flags().StringVarP(&flagPinnedRelease, "pinned-release", "p", "", "Pinned release ex 1.2.0, will download 1.2.23 but not 1.3.0. Pinned release 1 will download 1.2.0 but also 1.5.0, but not 2.0.0")
 	githubCmd.Flags().StringVarP(&flagOutputFileName, "output", "o", "", "local filename to save to")
-
 }
 
 func githubs(cmd *cobra.Command, args []string) {

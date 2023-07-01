@@ -6,6 +6,7 @@ import (
 	"fmt"
 	"io"
 	"net/http"
+	"reget/compare"
 )
 
 type Tag struct {
@@ -40,12 +41,12 @@ func GetTag(url string, arch string, release string, pinnedRelease string) (stri
 	for _, apiTag := range apiTags {
 		fmt.Println(apiTag.Name)
 		if pinnedRelease != "" {
-			if compareReleases(pinnedRelease, apiTag.Name) {
+			if compare.CompareReleases(pinnedRelease, apiTag.Name) {
 				return apiTag.TarBallUrl, nil
 			}
 		} else {
 			if release != "latest" {
-				if compareEqualReleases(release, apiTag.Name) {
+				if compare.CompareEqualReleases(release, apiTag.Name) {
 					return apiTag.TarBallUrl, nil
 				}
 			} else {
