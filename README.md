@@ -10,6 +10,8 @@ This tool is ideally to use in build scripts, like docker containers or in CI en
 * Pin to a major, to download always the latest minor
 
 ## Usage
+
+### Github usage
 ```
 # Download latest release
 reget github <owner>/<repo>
@@ -23,11 +25,30 @@ reget github <owner>/<repo> -o/--output local_filename.tar.gz
 # Download and pin on Major release 1
 reget github <owner>/<repo> -p/--pinned-release 1 
 
-# Download and pin on Minor release 1.10
+# Download and pin on Minor release 1.10 (will download 1.10.5)
 reget github <owner>/<repo> -p/--pinned-release 1.10
 
 # Download and pin on full release 1.10.3 (do not download any other version)
 reget github <owner>/<repo> -r/--release 1.10.3
+
+```
+
+### Pecl usage
+```
+# Download latest release
+reget pecl <package>
+
+# Download latest release and save it with custom filename
+reget pecl <package> -o/--output local_filename.tar.gz
+
+# Download and pin on Major release 1
+reget pecl <package> -p/--pinned-release 1 
+
+# Download and pin on Minor release 1.10 (will download 1.10.5)
+reget pecl <package> -p/--pinned-release 1.10
+
+# Download and pin on full release 1.10.3 (do not download any other version)
+reget pecl <package> -r/--release 1.10.3
 
 ```
 

@@ -40,7 +40,7 @@ func Test_releaseToVersion(t *testing.T) {
 	}
 
 	for _, test := range normalizeToVersionTests {
-		if output := releaseToVersion(test.arg1); output != test.expected {
+		if output := ReleaseToVersion(test.arg1); output != test.expected {
 			t.Errorf("Output %q not equal to expected %q", output, test.expected)
 		}
 	}

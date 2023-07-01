@@ -7,6 +7,10 @@ import (
 	"io"
 	"net/http"
 	"reget/compare"
+	"sort"
+	"strings"
+
+	"golang.org/x/mod/semver"
 )
 
 type Releases struct {
@@ -18,6 +22,8 @@ type Release struct {
 }
 
 func GetRelease(url string, release string, pinnedRelease string) (string, error) {
+	pinnedRelease = normalizeSemVer(pinnedRelease)
+
 	var apiUrl = fmt.Sprintf("https://pecl.php.net/rest/r/%s/allreleases.xml", url)
 	res, err := http.Get(apiUrl)
 	if err != nil {
@@ -38,24 +44,58 @@ func GetRelease(url string, release string, pinnedRelease string) (string, error
 		return "", err
 	}
 
-	fmt.Printf("Pinned Version: %s\n", pinnedRelease)
-
+	var arrReleases []string
 	for _, apiRelease := range apiReleases.Release {
-		fmt.Println(apiRelease.Name)
+		var semversion string
+		if strings.HasPrefix(apiRelease.Name, "v") {
+			semversion = apiRelease.Name
+		} else {
+			semversion = fmt.Sprintf("v%s", apiRelease.Name)
+		}
+		if semver.IsValid(semversion) {
+			arrReleases = append(arrReleases, semversion)
+		}
+	}
+
+	// Sort semver array, newest first
+	sort.Sort(sort.Reverse(semver.ByVersion(arrReleases)))
+
+	for _, apiRelease := range arrReleases {
+		fmt.Println(apiRelease)
 
 		if pinnedRelease != "" {
-			if compare.CompareReleases(pinnedRelease, apiRelease.Name) {
-				return fmt.Sprintf("https://pecl.php.net/get/%s-%s", url, apiRelease.Name), nil
+			if compare.CompareReleases(pinnedRelease, apiRelease) {
+				return fmt.Sprintf("https://pecl.php.net/get/%s-%s", url, getOriginalVersion(apiRelease, apiReleases.Release)), nil
 			}
 		} else {
 			if release != "latest" {
-				if compare.CompareEqualReleases(release, apiRelease.Name) {
-					return fmt.Sprintf("https://pecl.php.net/get/%s-%s", url, apiRelease.Name), nil
+				if compare.CompareEqualReleases(release, apiRelease) {
+					return fmt.Sprintf("https://pecl.php.net/get/%s-%s", url, getOriginalVersion(apiRelease, apiReleases.Release)), nil
 				}
 			} else {
-				return fmt.Sprintf("https://pecl.php.net/get/%s-%s", url, apiRelease.Name), nil
+				return fmt.Sprintf("https://pecl.php.net/get/%s-%s", url, getOriginalVersion(apiRelease, apiReleases.Release)), nil
 			}
 		}
 	}
 	return "", errors.New("cannot match any download for given release")
+}
+
+func getOriginalVersion(version string, originalVersions []Release) string {
+	for _, orgVersion := range originalVersions {
+		if orgVersion.Name == version {
+			return orgVersion.Name
+		} else if orgVersion.Name == strings.TrimPrefix(version, "v") {
+			return orgVersion.Name
+		}
+	}
+	return version
+}
+
+func normalizeSemVer(version string) string {
+	if strings.HasPrefix(version, "v") {
+		return version
+	} else if version != "" {
+		return fmt.Sprintf("v%s", version)
+	}
+	return version
 }

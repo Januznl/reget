@@ -16,12 +16,10 @@ var peclCmd = &cobra.Command{
 	Run:   pecls,
 }
 
-var flagPeclOutputFileName string
-
 func init() {
-	peclCmd.Flags().StringVarP(&flagPeclOutputFileName, "output", "o", "", "local filename to save to")
+	peclCmd.Flags().StringVarP(&flagRelease, "release", "r", "latest", "Release ex 1.2.1")
 	peclCmd.Flags().StringVarP(&flagPinnedRelease, "pinned-release", "p", "", "Pinned release ex 1.2.0, will download 1.2.23 but not 1.3.0. Pinned release 1 will download 1.2.0 but also 1.5.0, but not 2.0.0")
-
+	peclCmd.Flags().StringVarP(&flagOutputFileName, "output", "o", "", "local filename to save to")
 }
 
 func pecls(cmd *cobra.Command, args []string) {

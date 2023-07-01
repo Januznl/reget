@@ -7,8 +7,8 @@ import (
 )
 
 func CompareReleases(reqRelease string, foundRelease string) bool {
-	reqVersion := releaseToVersion(reqRelease)
-	foundVersion := releaseToVersion(foundRelease)
+	reqVersion := ReleaseToVersion(reqRelease)
+	foundVersion := ReleaseToVersion(foundRelease)
 
 	if reqVersion.Major == foundVersion.Major {
 		if reqVersion.Minor == 0 {
@@ -34,8 +34,8 @@ func CompareReleases(reqRelease string, foundRelease string) bool {
 }
 
 func CompareEqualReleases(reqRelease string, foundRelease string) bool {
-	reqVersion := releaseToVersion(reqRelease)
-	foundVersion := releaseToVersion(foundRelease)
+	reqVersion := ReleaseToVersion(reqRelease)
+	foundVersion := ReleaseToVersion(foundRelease)
 	if reqVersion.Major == foundVersion.Major {
 		if reqVersion.Minor == foundVersion.Minor {
 			if reqVersion.Patch == foundVersion.Patch {
@@ -47,18 +47,32 @@ func CompareEqualReleases(reqRelease string, foundRelease string) bool {
 }
 
 type Version struct {
-	Major int
-	Minor int
-	Patch int
+	Major int64
+	Minor int64
+	Patch int64
 }
 
-func releaseToVersion(release string) Version {
+func ReleaseToVersion(release string) Version {
 	release = normalizeRelease(release)
 	versionArr := strings.Split(release, ".")
 
-	major, _ := strconv.Atoi(versionArr[0])
-	minor, _ := strconv.Atoi(versionArr[1])
-	patch, _ := strconv.Atoi(versionArr[2])
+	major, _ := strconv.ParseInt(versionArr[0], 0, 64)
+	minor, _ := strconv.ParseInt(versionArr[1], 0, 64)
+	patch, _ := strconv.ParseInt(versionArr[2], 0, 64)
+
+	return Version{
+		Major: major,
+		Minor: minor,
+		Patch: patch,
+	}
+}
+func ReleaseToSemver(release string) Version {
+	release = normalizeRelease(release)
+	versionArr := strings.Split(release, ".")
+
+	major, _ := strconv.ParseInt(versionArr[0], 0, 64)
+	minor, _ := strconv.ParseInt(versionArr[1], 0, 64)
+	patch, _ := strconv.ParseInt(versionArr[2], 0, 64)
 
 	return Version{
 		Major: major,
