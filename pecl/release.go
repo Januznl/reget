@@ -7,7 +7,6 @@ import (
 	"io"
 	"net/http"
 	"reget/compare"
-	"sort"
 	"strings"
 
 	"golang.org/x/mod/semver"
@@ -22,7 +21,7 @@ type Release struct {
 }
 
 func GetRelease(url string, release string, pinnedRelease string) (string, error) {
-	pinnedRelease = normalizeSemVer(pinnedRelease)
+	pinnedRelease = compare.NormalizeSemVer(pinnedRelease)
 
 	var apiUrl = fmt.Sprintf("https://pecl.php.net/rest/r/%s/allreleases.xml", url)
 	res, err := http.Get(apiUrl)
@@ -56,9 +55,7 @@ func GetRelease(url string, release string, pinnedRelease string) (string, error
 			arrReleases = append(arrReleases, semversion)
 		}
 	}
-
-	// Sort semver array, newest first
-	sort.Sort(sort.Reverse(semver.ByVersion(arrReleases)))
+	arrReleases = compare.SortReleases(arrReleases)
 
 	for _, apiRelease := range arrReleases {
 		fmt.Println(apiRelease)
@@ -87,15 +84,6 @@ func getOriginalVersion(version string, originalVersions []Release) string {
 		} else if orgVersion.Name == strings.TrimPrefix(version, "v") {
 			return orgVersion.Name
 		}
-	}
-	return version
-}
-
-func normalizeSemVer(version string) string {
-	if strings.HasPrefix(version, "v") {
-		return version
-	} else if version != "" {
-		return fmt.Sprintf("v%s", version)
 	}
 	return version
 }

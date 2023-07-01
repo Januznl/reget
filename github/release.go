@@ -61,9 +61,9 @@ func GetRelease(url string, arch string, release string, pinnedRelease string) (
 			}
 		}
 
-		if apiRelease.TarBallUrl != "" {
-			return apiRelease.TarBallUrl, nil
-		}
+		// if apiRelease.TarBallUrl != "" {
+		// 	return apiRelease.TarBallUrl, nil
+		// }
 	}
 	return "", errors.New("cannot match any download for given release")
 }
