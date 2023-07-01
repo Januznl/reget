@@ -1,9 +1,9 @@
-
-
 .PHONY: golangci
 check:
 	golangci-lint run ./...
 
+build:
+	go build .
 
 .PHONY: test
 test:

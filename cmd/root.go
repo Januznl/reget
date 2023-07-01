@@ -6,11 +6,12 @@ import (
 
 var (
 	verbose bool
+	version = "dev"
 
 	rootCmd = &cobra.Command{
-		Use:   "reget [-v]",
-		Short: "Download (latest) release from online SVN repos.",
-		Long:  "Download releases from online SVN repos, you can get the latest, set a patch, minor or major version",
+		Short:   "Download (latest) release from online SVN repos.",
+		Long:    "Download releases from online SVN repos, you can get the latest, set a patch, minor or major version",
+		Version: version,
 	}
 )
 
