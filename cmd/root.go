@@ -1,6 +1,8 @@
 package cmd
 
 import (
+	"log"
+
 	"github.com/spf13/cobra"
 )
 
@@ -20,7 +22,8 @@ func Execute() error {
 }
 
 func init() {
-	// cobra.OnInitialize(initConfig)
+	log.SetFlags(0)
+
 	rootCmd.CompletionOptions.DisableDefaultCmd = true
 	rootCmd.AddCommand(githubCmd)
 	rootCmd.AddCommand(peclCmd)

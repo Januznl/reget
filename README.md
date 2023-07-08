@@ -1,4 +1,9 @@
 # ReGet
+![build](https://github.com/Januznl/reget/actions/workflows/goreleaser.yml/badge.svg)
+![ci](https://github.com/Januznl/reget/actions/workflows/ci.yml/badge.svg)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+
+## Overview
 Download the latest release/tag from online SVN tools like github. It determines based on the API which is the latest release or tag and downloads the package based on your architecture. This app is inspired by the python app [lastversion](https://github.com/dvershinin/lastversion).
 
 ## Build for automated use

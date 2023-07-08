@@ -2,6 +2,8 @@ package cmd
 
 import (
 	"fmt"
+	"io"
+	"log"
 	"os"
 	"reget/download"
 	"reget/pecl"
@@ -23,6 +25,10 @@ func init() {
 }
 
 func pecls(cmd *cobra.Command, args []string) {
+	if !verbose {
+		log.SetOutput(io.Discard)
+	}
+
 	if downloadUrl, err := pecl.GetRelease(args[0], flagRelease, flagPinnedRelease); err != nil {
 		fmt.Println(err.Error())
 		os.Exit(1)

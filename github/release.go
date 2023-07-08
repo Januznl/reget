@@ -5,6 +5,7 @@ import (
 	"errors"
 	"fmt"
 	"io"
+	"log"
 	"net/http"
 	"reget/compare"
 	"strings"
@@ -41,11 +42,11 @@ func GetRelease(url string, arch string, release string, pinnedRelease string) (
 		return "", err
 	}
 
-	fmt.Printf("architecture:   %s\n", arch)
-	fmt.Printf("Pinned Version: %s\n", pinnedRelease)
+	log.Printf("architecture:   %s\n", arch)
+	log.Printf("Pinned Version: %s\n", pinnedRelease)
 
 	for _, apiRelease := range apiReleases {
-		fmt.Println(apiRelease.Name)
+		log.Println(apiRelease.Name)
 
 		if pinnedRelease != "" {
 			if compare.CompareReleases(pinnedRelease, apiRelease.Name) {

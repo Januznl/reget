@@ -3,6 +3,7 @@ package download
 import (
 	"fmt"
 	"io"
+	"log"
 	"mime"
 	"net/http"
 	"os"
@@ -15,8 +16,7 @@ func DownloadRelease(releaseUrl string, localFileName string) {
 	resp, respError := http.DefaultClient.Do(req)
 
 	if respError != nil {
-		fmt.Printf("Unable to do request, error: %s", respError.Error())
-		os.Exit(1)
+		log.Fatalf("Unable to do request, error: %s\n", respError.Error())
 	}
 	defer resp.Body.Close()
 
@@ -32,8 +32,7 @@ func DownloadRelease(releaseUrl string, localFileName string) {
 
 	f, err := os.OpenFile(localFileName, os.O_CREATE|os.O_WRONLY, 0644)
 	if err != nil {
-		fmt.Printf("Unable to open file for writing, error: %s", err.Error())
-		os.Exit(1)
+		log.Fatalf("Unable to open file for writing, error: %s", err.Error())
 	}
 
 	bar := progressbar.DefaultBytes(
@@ -42,7 +41,6 @@ func DownloadRelease(releaseUrl string, localFileName string) {
 	)
 
 	if _, err := io.Copy(io.MultiWriter(f, bar), resp.Body); err != nil {
-		fmt.Printf("Unable to write to file, error: %s", err.Error())
-		os.Exit(1)
+		log.Fatalf("Unable to write to file, error: %s", err.Error())
 	}
 }

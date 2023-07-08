@@ -1,5 +1,5 @@
 .PHONY: golangci
-check:
+golangci:
 	golangci-lint run ./...
 
 build:

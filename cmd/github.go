@@ -2,6 +2,8 @@ package cmd
 
 import (
 	"fmt"
+	"io"
+	"log"
 	"os"
 	"reget/download"
 	"reget/github"
@@ -33,6 +35,10 @@ func init() {
 }
 
 func githubs(cmd *cobra.Command, args []string) {
+	if !verbose {
+		log.SetOutput(io.Discard)
+	}
+
 	if flagUseTags {
 		if downloadUrl, err := github.GetTag(args[0], flagArch, flagRelease, flagPinnedRelease); err != nil {
 			fmt.Println(err.Error())

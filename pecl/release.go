@@ -5,6 +5,7 @@ import (
 	"errors"
 	"fmt"
 	"io"
+	"log"
 	"net/http"
 	"reget/compare"
 	"strings"
@@ -58,7 +59,7 @@ func GetRelease(url string, release string, pinnedRelease string) (string, error
 	arrReleases = compare.SortReleases(arrReleases)
 
 	for _, apiRelease := range arrReleases {
-		fmt.Println(apiRelease)
+		log.Println(apiRelease)
 
 		if pinnedRelease != "" {
 			if compare.CompareReleases(pinnedRelease, apiRelease) {
