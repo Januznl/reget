@@ -5,6 +5,7 @@ import (
 	"errors"
 	"fmt"
 	"io"
+	"log"
 	"net/http"
 	"reget/compare"
 )
@@ -35,11 +36,11 @@ func GetTag(url string, arch string, release string, pinnedRelease string) (stri
 		return "", err
 	}
 
-	fmt.Printf("architecture:   %s\n", arch)
-	fmt.Printf("Pinned Version: %s\n", pinnedRelease)
+	log.Printf("architecture:   %s\n", arch)
+	log.Printf("Pinned Version: %s\n", pinnedRelease)
 
 	for _, apiTag := range apiTags {
-		fmt.Println(apiTag.Name)
+		log.Println(apiTag.Name)
 		if pinnedRelease != "" {
 			if compare.CompareReleases(pinnedRelease, apiTag.Name) {
 				return apiTag.TarBallUrl, nil

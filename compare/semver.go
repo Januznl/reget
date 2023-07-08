@@ -2,6 +2,7 @@ package compare
 
 import (
 	"fmt"
+	"log"
 	"sort"
 	"strconv"
 	"strings"
@@ -13,33 +14,33 @@ func CompareReleases(reqRelease string, foundRelease string) bool {
 	reqRelease = NormalizeSemVer(reqRelease)
 	foundRelease = NormalizeSemVer(foundRelease)
 
-	fmt.Printf("Compare release %s with %s \n", reqRelease, foundRelease)
+	log.Printf("Compare release %s with %s \n", reqRelease, foundRelease)
 
 	if semver.Major(reqRelease) == semver.Major(foundRelease) {
-		fmt.Println("found major!")
+		log.Println("found major!")
 		if getMinor(reqRelease) == "0" {
 			// found major, rest is wildcard
-			fmt.Println("found major, rest is wildcard")
+			log.Println("found major, rest is wildcard")
 			return true
 		} else {
 			if getMinor(reqRelease) == getMinor(foundRelease) {
 				if getPatch(reqRelease) == "0" {
 					// found Major, Minor, patch is wildcard
-					fmt.Println("found Major, Minor, patch is wildcard")
+					log.Println("found Major, Minor, patch is wildcard")
 					return true
 				} else {
 					foundPatch, _ := strconv.Atoi(getPatch(foundRelease))
 					reqPatch, _ := strconv.Atoi(getPatch(reqRelease))
 					if foundPatch >= reqPatch {
 						// found Major, Minor, patch is bigger of equal
-						fmt.Println("found Major, Minor, patch is bigger of equal")
+						log.Println("found Major, Minor, patch is bigger of equal")
 						return true
 					}
 				}
 			}
 		}
 	}
-	fmt.Println("nothing found")
+	log.Println("No match found")
 	return false
 }
 
@@ -48,7 +49,7 @@ func CompareEqualReleases(reqRelease string, foundRelease string) bool {
 	foundRelease = NormalizeSemVer(foundRelease)
 	result := semver.Compare(foundRelease, reqRelease)
 
-	fmt.Printf("Comparing %s with %s, result %d\n", reqRelease, foundRelease, result)
+	log.Printf("Comparing %s with %s, result %d\n", reqRelease, foundRelease, result)
 
 	return result == 0
 }

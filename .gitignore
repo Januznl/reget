@@ -2,3 +2,4 @@ dist/
 reget
 coverage.out
 *.tar.gz
+*.tgz
