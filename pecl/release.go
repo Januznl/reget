@@ -7,8 +7,9 @@ import (
 	"io"
 	"log"
 	"net/http"
-	"reget/compare"
 	"strings"
+
+	"github.com/januznl/reget/compare"
 
 	"golang.org/x/mod/semver"
 )
