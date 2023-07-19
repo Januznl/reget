@@ -5,8 +5,9 @@ import (
 	"io"
 	"log"
 	"os"
-	"reget/download"
-	"reget/pecl"
+
+	"github.com/januznl/reget/download"
+	"github.com/januznl/reget/pecl"
 
 	"github.com/spf13/cobra"
 )

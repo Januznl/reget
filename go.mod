@@ -1,4 +1,4 @@
-module reget
+module github.com/januznl/reget
 
 go 1.20
 

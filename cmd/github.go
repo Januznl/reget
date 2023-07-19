@@ -5,9 +5,10 @@ import (
 	"io"
 	"log"
 	"os"
-	"reget/download"
-	"reget/github"
 	"runtime"
+
+	"github.com/januznl/reget/download"
+	"github.com/januznl/reget/github"
 
 	"github.com/spf13/cobra"
 )

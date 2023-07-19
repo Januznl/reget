@@ -7,7 +7,8 @@ import (
 	"io"
 	"log"
 	"net/http"
-	"reget/compare"
+
+	"github.com/januznl/reget/compare"
 )
 
 type Tag struct {

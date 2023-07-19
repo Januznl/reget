@@ -3,7 +3,8 @@ package main
 import (
 	"fmt"
 	"os"
-	"reget/cmd"
+
+	"github.com/januznl/reget/cmd"
 )
 
 func main() {
