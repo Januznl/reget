@@ -1,4 +1,5 @@
 # ReGet
+[![Go Report Card](https://goreportcard.com/badge/github.com/januznl/reget)](https://goreportcard.com/report/github.com/januznl/reget) 
 ![build](https://github.com/Januznl/reget/actions/workflows/goreleaser.yml/badge.svg)
 ![ci](https://github.com/Januznl/reget/actions/workflows/ci.yml/badge.svg)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
